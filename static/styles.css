@@ -1,0 +1,37 @@
+.chat-response {
+    background-color: #e9ecef; /* Cor de fundo cinza mais claro */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-card {
+    max-width: 600px;
+    margin: auto;
+}
+
+.user-message {
+    text-align: right;
+    color: #495057; /* Cor de texto cinza escuro do Bootstrap */
+}
+
+#chat_box {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Personalizando a barra de rolagem */
+::-webkit-scrollbar {
+    width: 5px; /* Largura da barra de rolagem */
+}
+
+/* Personalizando a "alça" (o elemento que você arrasta) da barra de rolagem */
+::-webkit-scrollbar-thumb {
+    background: #888; /* Cor da "alça" */
+    border-radius: 2px; /* Bordas arredondadas */
+}
+
+/* Quando a "alça" é clicada (estado :hover) */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Cor da "alça" ao passar o mouse */
+}
