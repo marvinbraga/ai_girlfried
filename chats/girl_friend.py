@@ -62,14 +62,14 @@ class AIChat:
     A classe AIChat é responsável pela comunicação com a IA.
     """
 
-    def __init__(self, settings):
+    def __init__(self, settings, name):
+        self._name = name
         self._settings = settings
         self._prompt_template = self._create_prompt_template()
         self._chat = self._create_chat()
 
-    @staticmethod
-    def _create_prompt_template():
-        template = AdvancedGirl.get_prompt("Shirley")
+    def _create_prompt_template(self):
+        template = AdvancedGirl.get_prompt(self._name)
         return PromptTemplate(
             input_variables={"history", "human_input"},
             template=template
@@ -92,7 +92,7 @@ class VoiceMessage:
     A classe VoiceMessage é responsável pela criação de uma mensagem de voz a partir de um texto.
     """
 
-    def __init__(self, settings, name="Rachel"):
+    def __init__(self, settings, name):
         self._name = name
         self._message = None
         self._settings = settings

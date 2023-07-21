@@ -5,7 +5,8 @@ from chats.settings import Settings
 
 app = Flask(__name__)
 settings = Settings('.res/voices.json')
-chat = AIChat(settings)
+name = "Rachel"
+chat = AIChat(settings, name)
 
 
 @app.route("/")
@@ -17,7 +18,7 @@ def home():
 def send_message():
     human_input = request.form["human_input"]
     message = chat.get(human_input)
-    # VoiceMessage(settings).get(message)
+    # VoiceMessage(settings, name).get(message)
     return message
 
 
