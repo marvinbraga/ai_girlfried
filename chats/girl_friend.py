@@ -20,9 +20,9 @@ class AIChat:
     """
 
     def __init__(self, settings):
-        self.settings = settings
-        self.prompt_template = self._create_prompt_template()
-        self.chat = self._create_chat()
+        self._settings = settings
+        self._prompt_template = self._create_prompt_template()
+        self._chat = self._create_chat()
 
     @staticmethod
     def _create_prompt_template():
@@ -45,13 +45,13 @@ class AIChat:
     def _create_chat(self):
         return LLMChain(
             llm=ChatOpenAI(temperature=0.2),
-            prompt=self.prompt_template,
+            prompt=self._prompt_template,
             verbose=True,
             memory=ConversationBufferWindowMemory(k=10),
         )
 
     def get(self, human_input):
-        return self.chat.predict(human_input=human_input)
+        return self._chat.predict(human_input=human_input)
 
 
 class VoiceMessage:
@@ -61,13 +61,19 @@ class VoiceMessage:
 
     def __init__(self, settings, name="Rachel"):
         self._name = name
-        self.settings = settings
+        self._message = None
+        self._settings = settings
+
+    @property
+    def message(self):
+        return self._message
 
     def play(self):
         playsound("audio.mp3")
         return self
 
     def get(self, message):
+        self._message = message
         payload = {
             "text": message,
             "model_id": "eleven_multilingual_v1",
@@ -80,11 +86,11 @@ class VoiceMessage:
 
         headers = {
             "accept": "audio/mpeg",
-            "xi-api-key": self.settings.values["ELEVEN_LABS_API_KEY"],
+            "xi-api-key": self._settings.values["ELEVEN_LABS_API_KEY"],
             "Content-Type": "application/json",
         }
 
-        voice = self.settings.get_voice_id(self._name)
+        voice = self._settings.get_voice_id(self._name)
         response = requests.post(
             f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?optimize_streaming_latency=0',
             json=payload,
@@ -98,3 +104,5 @@ class VoiceMessage:
             t.start()
         else:
             raise Exception(f"Problemas com o áudio - {response.status_code}.")
+
+        return self

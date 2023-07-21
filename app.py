@@ -15,9 +15,7 @@ def home():
 def send_message():
     settings = Settings('.res/voices.json')
     human_input = request.form["human_input"]
-    message = AIChat(settings).get(human_input)
-    VoiceMessage(settings).get(message)
-    return message
+    return VoiceMessage(settings).get(AIChat(settings).get(human_input)).message
 
 
 if __name__ == '__main__':
