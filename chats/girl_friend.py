@@ -77,7 +77,7 @@ class AIChat:
 
     def _create_chat(self):
         return LLMChain(
-            llm=ChatOpenAI(temperature=0.2),
+            llm=ChatOpenAI(temperature=0.9),
             prompt=self._prompt_template,
             verbose=True,
             memory=ConversationBufferWindowMemory(k=20),
@@ -139,3 +139,16 @@ class VoiceMessage:
             raise Exception(f"Problemas com o áudio - {response.status_code}.")
 
         return self
+
+    def list(self):
+        url = "https://api.elevenlabs.io/v1/voices"
+        headers = {
+            "Accept": "application/json",
+            "xi-api-key": self._settings.values["ELEVEN_LABS_API_KEY"],
+        }
+        response = requests.get(url, headers=headers)
+        if response.status_code < 400:
+            result = [voice["name"] for voice in response.json()["voices"]]
+            return result
+
+        return response.text
