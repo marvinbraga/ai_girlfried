@@ -105,15 +105,15 @@ class VoiceMessage:
         playsound("audio.mp3")
         return self
 
-    def get(self, message):
+    def get(self, message, stability=0.15, similarity_boost=0.5):
         self._message = message
         payload = {
             "text": message,
             "model_id": "eleven_multilingual_v1",
             "language": "portuguese",
             "voice_settings": {
-                "stability": 0,
-                "similarity_boost": 0.3,
+                "stability": stability,
+                "similarity_boost": similarity_boost,
             }
         }
 

@@ -17,8 +17,10 @@ def home():
 @app.route("/send_message", methods=["POST"])
 def send_message():
     human_input = request.form["human_input"]
+    stability = request.form.get("stability")
+    similarity_boost = request.form.get("similarity_boost")
     message = chat.get(human_input)
-    VoiceMessage(settings, name).get(message)
+    VoiceMessage(settings, name).get(message, stability, similarity_boost)
     return message
 
 
