@@ -5,7 +5,7 @@ from chats.settings import Settings
 
 app = Flask(__name__)
 settings = Settings('.res/voices.json')
-name = "Natasha - Valley girl"
+name = "Charlotte"
 chat = AIChat(settings, name)
 
 
